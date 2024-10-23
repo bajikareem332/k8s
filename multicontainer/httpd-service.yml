@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-service
+  namespace: devara
+  labels: 
+    author: karem1
+spec:
+  type: LoadBalancer
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30010
+  selector:
+    author: karem    

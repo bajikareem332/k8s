@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: httpd-statefulset
+  labels:
+    type: webserver
+    author: kareem
+spec:
+   replicas: 3
+   serviceName: httpd
+   selector:
+     matchLabels:
+       type: webserver
+   template:
+     metadata:
+       name: httpd-pod
+       labels:
+        type: webserver
+     spec:
+       containers:
+         - name: my-httpd
+           image: httpd:2.4
+           ports:
+            - containerPort: 80
+           volumeMounts:
+             - name: my-volume
+               mountPath: /usr/local/apache2/htdocs
+   volumeClaimTemplates:
+     - metadata:
+         name: my-volume
+       spec:
+         accessModes: ["ReadWriteOnce"] 
+         resources:
+           requests:
+             storage: 500Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd
+spec:
+  clusterIP: None
+  ports:
+    - name: httpd
+      port: 80
+  selector:
+    type: webserver    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: httpd
+
+
+          

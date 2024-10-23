@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-nginx-deployment
+  labels:
+    type: proxy
+    author: kareem
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: proxy
+  template:
+    metadata:
+      labels:
+        type: proxy
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+

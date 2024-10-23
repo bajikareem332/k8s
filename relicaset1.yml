@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: tomcat-rs
+  namespace: test-ns
+  labels:
+    app: webserver
+    author: kareem
+spec:
+  replicas: i3
+  selector:
+    matchLabels:
+      app: webserver
+  template: 
+    metadata:
+      labels:
+        app: webserver
+    spec: 
+      containers:
+        - name: mytomcat
+          image: tomee
+          ports:
+            - containerPort: 80
+              hostPort: 8888
+

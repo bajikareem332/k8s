@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+  labels: 
+    type: hello
+spec:
+  restartPolicy: Always
+  containers:
+    - name: mynginx
+      image: nginx
+      ports:
+        - containerPort: 80
+    - name: tomcat
+      image: tomcat:latest
+      ports:
+        - containerPort: 8080
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "500m"
+        limits:
+          memory: "512Mi"
+          cpu: "1"
+   

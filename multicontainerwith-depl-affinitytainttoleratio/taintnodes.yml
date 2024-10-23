@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deploy
+  labels:
+    author: kareembhai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: kareembhai1
+  template:
+    metadata:
+      labels:
+        name: kareembhai1
+    spec:
+      containers:
+        - name: mytomy
+          image: tomee
+      tolerations:
+        - key: slave2
+          operator: Equal
+          value: munna1
+          effect: NoSchedule

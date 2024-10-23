@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    authour: karem
+spec:
+  containers:
+    - name: mynginx
+      image: nginx
+      command: ['sh','-c','echo the mynginx is running && sleep 36000']
+      ports:
+        - containerPort: 80
+          hostPort: 30009
+      env:
+        - name: FIRSTNAME
+          value: sudarshan      
+  initContainers:
+    - name: myinit
+      image: busybox
+      command: ['sh','-c'] 
+      args: ['until nslookup nginx-service.default.svc.cluster.local;do echo waiting for niginx-service to be up;sleep 2;done']    
+
+      
